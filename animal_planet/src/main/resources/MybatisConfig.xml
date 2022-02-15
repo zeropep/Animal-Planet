@@ -7,5 +7,15 @@
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings>
 	<typeAliases>
+		<typeAlias type="com.animalplanet.www.domain.HospitalVO" alias="hvo"/>
+		<typeAlias type="com.animalplanet.www.domain.CommentVO" alias="cvo"/>
+		<typeAlias type="com.animalplanet.www.domain.MemberVO" alias="mvo"/>
+		<typeAlias type="com.animalplanet.www.domain.CartVO" alias="cavo"/>
+		<typeAlias type="com.animalplanet.www.domain.BoardVO" alias="bvo"/>
+		<typeAlias type="com.animalplanet.www.domain.FileVO" alias="fvo"/>
+		<typeAlias type="com.animalplanet.www.domain.OrderVO" alias="ovo"/>
+		<typeAlias type="com.animalplanet.www.domain.NProductVO" alias="npvo"/>
+		<typeAlias type="com.animalplanet.www.domain.UProductVO" alias="upvo"/>
+		<typeAlias type="com.animalplanet.www.domain.PagingVO" alias="pgvo"/>
 	</typeAliases>
 </configuration>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.animalplanet.www.repository.HCommentDAO">
+	<insert id="insertHComment" parameterType="cvo">
+		insert into comment (hno, nick_name, content, mod_at) 
+		values (#{hno}, #{nickName}, #{content}, now())
+	</insert>
+	
+	<select id="selectHCommentList" resultType="cvo">
+		select a.cno, nick_name, content, mod_at 
+		from (select cno from comment where hno = #{hno} limit #{pgvo.pageStart}, #{pgvo.qty}) a
+		inner join comment c on a.cno = c.cno
+	</select>
+	
+	<select id="selectOneHCommentTotalCount" resultType="int" >
+		select count(cno) from comment where hno = #{hno}
+	</select>
+	
+	<update id="updateHComment" parameterType="cvo">
+		update comment set content = #{content}, mod_at = now()
+		where cno = #{cno}
+	</update>
+	
+	<delete id="deleteHComment" parameterType="long">
+		delete from comment where cno = #{cno}
+	</delete>
+	
+	<delete id="deleteAllHComment" parameterType="long">
+		delete from comment where hno = #{hno}
+	</delete>
+	
+	<select id="selectOneHComment" parameterType="long" resultType="long">
+		select hno from comment where cno = #{cno}
+	</select>
+</mapper>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.animalplanet.www.repository.NProductDAO">
+	<insert id="insertNProduct" parameterType="npvo">
+		insert into new_product (category1, category2, pname, price, stock, description, made_in) 
+		values (#{category1}, #{category2}, #{pname}, #{price}, #{stock}, #{description}, #{madeIn})
+	</insert>
+	
+	<select id="selectNProductList" resultType="npvo">
+		select npno, category1, category2, pname, price from new_product
+		order by npno desc
+	</select>
+	
+	<select id="selectOneNProduct" parameterType="long" resultType="npvo">
+		select * from new_product where npno = #{npno}
+	</select>
+	
+<!-- 	<update id="updateRCProduct" parameterType="long">
+		update product set read_count = read_count + 1
+		where pno = #{pno}
+	</update> -->
+	
+	<update id="updateNProduct" parameterType="npvo">
+		update new_product set pname = #{pname}, category2 = #{category2},
+		 price = #{price}, description = #{description}, made_in = #{madeIn}, stock = #{stock}
+		where npno = #{npno}
+	</update>
+	
+	<!-- 스톡업데이트는 따로 -->
+	
+	<delete id="deleteNProduct" parameterType="long">
+		delete from new_product where npno = #{npno}
+	</delete>
+	
+	<sql id="search">
+		<if test="type != null">
+			<trim prefix="and (" suffix=")" prefixOverrides="OR">
+				<foreach collection="typeToArray" item="type">
+					<trim prefix="OR">
+						<choose>
+							<when test="type == 'n'.toString()">
+								pname like concat('%',#{keyword},'%')
+							</when>
+							<when test="type == 'd'.toString()">
+								description like concat('%',#{keyword},'%')
+							</when>
+							<when test="type == 'm'.toString()">
+								made_in like concat('%',#{keyword},'%')
+							</when>
+						</choose>
+					</trim>
+				</foreach>
+			</trim>
+		</if>
+	</sql>
+	
+	<sql id="cate">
+		<if test="category1 != null">
+			 and category1 = #{category1}
+			<if test="category2 != null">
+				 and category2 = #{category2}
+			</if>
+		</if>
+	</sql>
+	
+	<select id="selectProductListPaging" parameterType="pgvo" resultType="npvo">
+		select a.npno, category1, category2, pname, price, has_file
+		from (select npno from new_product where npno > 0
+		<include refid="search"></include>
+		<include refid="cate"></include>
+		order by npno desc limit #{pageStart}, #{qty} ) a
+		left join new_product b on a.npno = b.npno
+	</select>
+	
+	<select id="selectOneTotalCount" parameterType="pgvo" resultType="int">
+		select count(npno) from new_product where npno > 0
+		<include refid="search"></include>
+	</select>
+	
+	<select id="selectOnePno" resultType="long">
+		select max(npno) from new_product
+	</select>
+	
+	<update id="updateProductFileCount">
+		update new_product set has_file = #{cnt} where npno = #{npno}
+	</update>
+	
+</mapper>

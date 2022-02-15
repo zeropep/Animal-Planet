@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.animalplanet.www.repository.CartDAO">
+	<insert id="insertCart" parameterType="cavo">
+		insert into cart
+		(owner, npno, pname, cart_stock, price, image)
+		values (#{owner}, #{npno}, #{pname}, #{cartStock}, #{price}, #{image})
+	</insert>
+	
+	<select id="selectCart" parameterType="String" resultType="cavo">
+		select * from cart where owner = #{email}
+	</select>
+	
+	<update id="updateCartStock" parameterType="cavo">
+		update cart set cart_stock = #{cartStock}
+		where cartno = #{cartno}
+	</update>
+
+	<delete id="deleteCart" parameterType="long">
+		delete from cart where cartno = #{cartno}
+	</delete>
+
+</mapper>

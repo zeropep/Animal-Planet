@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.animalplanet.www.repository.BFileDAO">
+<sql id="cond">
+	from file where
+</sql>
+	<insert id="insertBFile" parameterType="fvo">
+		insert into file (uuid, save_dir, file_name, file_type, bno, file_size)
+		values (#{uuid}, #{saveDir}, #{fileName}, #{fileType}, #{bno}, #{fileSize})		
+	</insert>
+	<select id="selectListBFile" parameterType="long" resultType="fvo">
+		select * <include refid="cond"/> bno = #{bno}
+	</select>
+	<delete id="deleteBFile" parameterType="string">
+		delete <include refid="cond"/> uuid = #{uuid}
+	</delete>
+	<delete id="deleteAllBFile" parameterType="long">
+		delete <include refid="cond"/> bno = #{bno}
+	</delete>
+	<select id="selectOneBno" parameterType="string" resultType="long">
+		select bno <include refid="cond"/> uuid = #{uuid}
+	</select>
+	<select id="selectListAllFiles" resultType="fvo">
+		select * from file;
+	</select>
+</mapper>

@@ -1,0 +1,119 @@
+@charset "UTF-8";
+svg {
+	margin: 0px;
+	left: 50px;
+	background-color: #ebf2f5;
+}
+
+.OUTLINE {
+    stroke-linejoin:round;
+    stroke: #eaeaea;
+    stroke-width: 2;
+}
+#bg {
+	position: relative;
+}
+#region {
+	withd: 500px;
+	height: 50px;
+	background-color: #ebf2f5;
+	border: 0;
+	text-align: center;
+	font-size: 2em;
+	position: absolute;
+	top: 50px;
+	right: 50px;
+}
+#CD3000000 {
+    fill: #f1c40f;
+    
+}
+#CD3010000 {
+    fill: #16a085;
+}
+#CD3020000 {
+    fill: #f39c12;
+}
+#CD3030000 {
+    fill: #2ecc71;
+}
+#CD3040000 {
+    fill: #e67e22;
+}
+#CD3050000 {
+    fill: #27ae60;
+}
+#CD3060000 {
+    fill: #d35400;
+}
+#CD3070000 {
+    fill: #3498db;
+}
+#CD3080000 {
+    fill: #e74c3c;
+}
+#CD3090000 {
+    fill: #2980b9;
+}
+#CD3100000 {
+    fill: #c0392b;
+}
+#CD3110000 {
+    fill: #9b59b6;
+}
+#CD3120000 {
+    fill: #8e44ad;
+}
+#CD3130000 {
+    fill: #34495e;
+}
+#CD3140000 {
+    fill: #2c3e50;
+}
+#CD3150000 {
+    fill: #1abc9c;
+}
+#CD3160000 {
+    fill: #f1c40f;
+}
+#CD3170000 {
+    fill: #16a085;
+}
+#CD3180000 {
+    fill: #f39c12;
+}
+#CD3190000 {
+    fill: #2ecc71;
+}
+#CD3200000 {
+    fill: #e67e22;
+}
+#CD3210000 {
+    fill: #27ae60;
+}
+#CD3220000 {
+    fill: #d35400;
+}
+#CD3230000 {
+    fill: #3498db;
+}
+#CD3240000 {
+    fill: #e74c3c;
+}
+.LINE {
+    stroke-linejoin:round;
+    stroke: #ffffff;
+    stroke-width: 1;
+    fill: none;
+}
+.POINT {
+    stroke: #ffffff;
+    stroke-width: 1;
+    fill: #ffffff;
+}
+.TEXT {
+    fill: #ffffff;
+    font-size: 16px;
+    text-anchor: middle;
+    alignment-baseline: middle;
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.animalplanet.www.repository.HistoryDAO">
+	<insert id="insertHistory" parameterType="ovo">
+		insert into history
+		(buyer, npno, pname, method, pay_with, payment, amount, request)
+		values (#{buyer}, #{npno}, #{pname}, #{method}, #{payWith}, #{payment}, #{amount}, #{request})
+	</insert>
+	
+	<select id="selectHistory" parameterType="String" resultType="ovo">
+		select * from history where buyer = #{email}
+	</select>
+	
+	<update id="updateHistory" parameterType="ovo">
+		update history set payment = #{payment}
+		where ohno = #{ohno}
+	</update>
+
+	<delete id="deleteHistory" parameterType="long">
+		delete from history where ohno = #{ohno}
+	</delete>
+
+</mapper>
