@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.animalplanet.www.repository.PCommentDAO">
+	<insert id="insertPComment" parameterType="cvo">
+		insert into comment (npno, nick_name, content, mod_at) 
+		values (#{npno}, #{nickName}, #{content}, now())
+	</insert>
+	
+	<select id="selectListPComment" resultType="cvo">
+		select a.cno, nick_name, content, mod_at 
+		from (select cno from comment where npno = #{npno} limit #{pgvo.pageStart}, #{pgvo.qty}) a
+		inner join comment c on a.cno = c.cno
+	</select>
+	
+	<select id="selectOnePCommentTotalCount" resultType="int" >
+		select count(cno) from comment where npno = #{npno}
+	</select>
+	
+	<update id="updatePComment" parameterType="cvo">
+		update comment set content = #{content}, mod_at = now()
+		where cno = #{cno}
+	</update>
+	
+	<delete id="deleteOnePComment" parameterType="long">
+		delete from comment where cno = #{cno}
+	</delete>
+	
+	<delete id="deleteAllPComment" parameterType="long">
+		delete from comment where npno = #{npno}
+	</delete>
+	
+	<select id="selectOnePno" parameterType="long" resultType="long">
+		select npno from comment where cno = #{cno}
+	</select>
+</mapper>

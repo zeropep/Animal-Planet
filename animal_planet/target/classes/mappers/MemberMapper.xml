@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.animalplanet.www.repository.MemberDAO">
+	<insert id="insertMember" parameterType="mvo">
+		insert into member
+		(email, pwd, name, nick_name, phone_number, address, address_detail)
+		values (#{email}, #{pwd},#{name}, #{nickName},
+		#{phoneNumber},#{address},
+		#{addressDetail})
+	</insert>
+
+	<select id="selectExist" parameterType="string" resultType="int">
+		select count(email) from member
+		where email = #{email}
+	</select>
+
+	<select id="selectOneLogin" parameterType="mvo" resultType="mvo">
+		select *
+		from member
+		where email = #{email} and pwd = #{pwd}
+	</select>
+
+
+	<select id="getDetail" resultType="mvo">
+		select * from member where email = #{email}
+	</select>
+	
+	
+	<select id="getDetailMember" resultType="mvo">
+		select * from member where mno = #{mno}
+	</select>
+
+	<update id="update" parameterType="mvo">
+		update member
+		set pwd = #{pwd},
+		name=#{name}, nick_name = #{nickName},
+		phone_number=#{phoneNumber},
+		address= #{address},
+		address_detail= #{addressDetail}
+		where email =
+		#{email}
+	</update>
+
+	<update id="modifyPwd" parameterType="mvo">
+		update member
+		set pwd =
+		#{pwd}
+		where email = #{email}
+	</update>
+	<select id="findPwd" parameterType="mvo" resultType="mvo">
+		select *
+		from member
+		where email = #{email} and phone_number = #{phoneNumber}
+	</select>
+	
+	<!-- 구매내역 리스트 -->
+	<select id="selectListOrderPaging" resultType="ovo">
+		select * from history where buyer = #{email}
+		limit #{pgvo.pageStart}, #{pgvo.qty}
+	</select>
+	<select id="selectOneOrderTotalCount" parameterType="String" resultType="int">
+		select count(ohno) from history where ohno > 0 and buyer = #{email}
+	</select>
+	<delete id="delete" parameterType="mvo">
+	delete from member
+	where email = #{email}
+	  
+	</delete>
+
+</mapper>

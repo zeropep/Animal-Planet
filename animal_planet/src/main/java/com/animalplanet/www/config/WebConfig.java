@@ -39,8 +39,8 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 		
 		String uploadLocation = "C:\\develop\\_java\\fileUpload";
 		// 파일위치 각각에 맞게 수정 바랍니다.
-		int maxFileSize = 1024 * 1024;
-		int maxReqSize = maxFileSize * 5;
+		int maxFileSize = 1024 * 1024 * 4;
+		int maxReqSize = maxFileSize * 3;
 		int fileSizeThreshold = maxReqSize;
 		
 		MultipartConfigElement multipartConfigElement = new MultipartConfigElement(uploadLocation, maxFileSize, maxReqSize, fileSizeThreshold);

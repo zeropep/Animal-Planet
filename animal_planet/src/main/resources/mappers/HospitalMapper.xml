@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.animalplanet.www.repository.HospitalDAO">
+	<insert id="insertHospital" parameterType="hvo">
+		insert into hospital values 
+		(#{hno}, #{opnsfteamcode}, #{mgtno}, #{trdstategbn}, #{trdstatenm},
+		 #{dcbymd}, #{clgstdt}, #{clgenddt}, #{ropnymd}, #{sitetel}, #{sitewhladdr},
+		 #{rdnwhladdr}, #{bplcnm}, #{updatedt}, #{lat}, #{lon})
+	</insert>
+	
+	<select id="selectAllHospitalList" resultType="hvo">
+		select hno, opnsfteamcode, sitetel, rdnwhladdr, sitewhladdr, bplcnm, lat, lon
+		from hospital 
+	</select>
+	
+	<sql id="search">
+		<if test="pgvo.keyword != null">
+			and bplcnm like concat('%',#{pgvo.keyword},'%')
+		</if>
+	</sql>
+	
+	<select id="selectHospitalList" resultType="hvo">
+		select a.hno, opnsfteamcode, sitetel, rdnwhladdr, sitewhladdr, bplcnm, lat, lon
+		from (select hno from hospital where opnsfteamcode = #{opn}
+		<include refid="search"></include>
+		limit #{pgvo.pageStart}, #{pgvo.qty}) a
+		left join hospital b on a.hno = b.hno
+	</select>
+	
+	<select id="selectTotalCount" resultType="int">
+		select count(hno) from hospital where opnsfteamcode = #{opn}
+		<include refid="search"></include>
+	</select>
+	
+	<select id="selectOneHospital" parameterType="long" resultType="hvo">
+		select * from hospital where hno = #{hno}
+	</select>
+	
+	<update id="updateHospital" parameterType="hvo">
+		update hospital set trdstategbn = #{trdstategbn}, trdstatenm = #{trdstatenm}, 
+		dcbymd = #{dcbymd}, clgstdt = #{clgstdt}, clgenddt = #{clgenddt}, 
+		sitetel = #{sitetel} where hno = #{hno}
+	</update>
+	
+	<delete id="deleteHospital">
+		delete from board where hno = #{hno}
+	</delete>
+</mapper>
