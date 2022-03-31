@@ -85,11 +85,7 @@
 			  		<input type="hidden" name="pageNo" value="1">
 			  		<input type="hidden" name="qty" value="${pgn.pgvo.qty }">
 			  		<input type="text" class="form-control mx-2" name="keyword" placeholder="Search" >
-			  		<button type="submit" class="btn btn-success position-relative">Search
-			  			<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-			    			${pgn.totalCount }
-			  			</span>
-			  		</button>
+			  		<button type="submit" class="btn btn-success position-relative">Search</button>
 				  </div>
 				  </form>
 			    </div>

@@ -14,28 +14,30 @@ async function regComment(data) {
         console.log(error);
     }
 }
-
-document.getElementById("cmtPostBtn").addEventListener("click", (e) => {
-    e.preventDefault();
-    let data = {
-        hno: hnoVal,
-        nickName: document.getElementById("cmtWriter").innerText,
-        content: document.getElementById("cmtText").value,
-    };
-    if (data.content == null || data.content == "") {
-        alert("댓글을 입력해주세요.");
-        document.getElementById("cmtText").focus();
-        return false;
-    } else {
-        regComment(data).then(result => {
-            if (parseInt(result)) {
-                alert("댓글 등록 성공");
-            }
-            document.getElementById("cmtText").value = "";
-            getCommentList(data.hno);
-        });
-    }
-});
+const cmtBtn = document.getElementById("cmtPostBtn");
+if (cmtBtn != null) {
+    document.getElementById("cmtPostBtn").addEventListener("click", (e) => {
+        e.preventDefault();
+        let data = {
+            hno: hnoVal,
+            nickName: document.getElementById("cmtWriter").innerText,
+            content: document.getElementById("cmtText").value,
+        };
+        if (data.content == null || data.content == "") {
+            alert("댓글을 입력해주세요.");
+            document.getElementById("cmtText").focus();
+            return false;
+        } else {
+            regComment(data).then(result => {
+                if (parseInt(result)) {
+                    alert("댓글 등록 성공");
+                }
+                document.getElementById("cmtText").value = "";
+                getCommentList(data.hno);
+            });
+        }
+    });
+}
 
 async function spreadCommentFromServer(hno, page) {
     try {
@@ -89,9 +91,9 @@ function printPagination(prev, startPage, pgvo, endPage, next) {
 function getCommentList(hno, page=1) {
     spreadCommentFromServer(hno, page).then(result => {
         // console.log(result);
-        if (result != null) {
-            document.getElementById("cmtCount").innerText = result.totalCount;
-        }
+        // if (result != null) {
+        //     document.getElementById("cmtCount").innerText = result.totalCount;
+        // }
         const ul = document.getElementById("cmtArea");
         if (result.cmtList.length) {
             ul.innerHTML = "";

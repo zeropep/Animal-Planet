@@ -1,6 +1,11 @@
 package com.animalplanet.www.domain;
 
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
+
+import com.animalplanet.www.security.AuthVO;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +30,7 @@ public class MemberVO {
 	private int grade;
 	private String joinDate;
 	private String modDate;
-	
+	private String lastLogin;
+	private List<AuthVO> authList;
 
 }

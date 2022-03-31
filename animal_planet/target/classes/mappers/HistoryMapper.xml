@@ -5,8 +5,8 @@
 <mapper namespace="com.animalplanet.www.repository.HistoryDAO">
 	<insert id="insertHistory" parameterType="ovo">
 		insert into history
-		(buyer, npno, pname, method, pay_with, payment, amount, request)
-		values (#{buyer}, #{npno}, #{pname}, #{method}, #{payWith}, #{payment}, #{amount}, #{request})
+		(buyer, npno, pname, price, total_price method, pay_with, payment, amount, request)
+		values (#{buyer}, #{npno}, #{pname}, #{price}, #{totalPrice}, #{method}, #{payWith}, #{payment}, #{amount}, #{request})
 	</insert>
 	
 	<select id="selectHistory" parameterType="String" resultType="ovo">

@@ -24,7 +24,8 @@ public interface MemberService {
 
 	MemberDTO getDetailMember(long mno);
 	int removeFile(String uuid);
-	
+	void admin();
+	public boolean updateLastLogin(String authEmail);
 	
 	
 	

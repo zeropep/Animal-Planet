@@ -11,7 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.animalplanet.www.handler.test;
+import com.animalplanet.www.handler.HospitalAPI;
 
 import lombok.extern.slf4j.Slf4j;
 

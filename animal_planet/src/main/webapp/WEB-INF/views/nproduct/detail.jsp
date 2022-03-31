@@ -43,13 +43,20 @@
 			              <div class="form-group row">
 			                <label for="buyQty" class="col-sm-2 col-form-label">수량</label>
 			                <div class="col-sm-10">
-			                  <input type="number" class="form-control" id="buyQty" min="1" value="1">
+			                  <input type="number" class="form-control" id="buyQty" min="1" max="${npvo.stock }" value="1">
 			                </div>
 			              </div>
                         <hr style="margin-top:10px;margin-bottom:10px;padding:0px;" />
                         <p id="total">총 가격 : ${npvo.price * 1 } 원</p>
-                        <button type="button" class="btn" id="buy">결제하기</button>
-                        <button type="button" class="btn" id="cart">장바구니</button>
+                        <c:choose>
+                          <c:when test="${npvo.stock > 0 }">
+	                        <button type="button" class="btn" id="buy">결제하기</button>
+	                        <button type="button" class="btn" id="cart">장바구니</button>
+                          </c:when>
+                          <c:otherwise>
+                            <h1>SOLD OUT</h1>
+                          </c:otherwise>
+                        </c:choose>
 			            </form>
                       </div>
                     </div>

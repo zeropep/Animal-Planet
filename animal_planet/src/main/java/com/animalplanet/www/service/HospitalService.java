@@ -13,4 +13,6 @@ public interface HospitalService {
 	int modify(HospitalVO hvo);
 	int remove(long hno);
 	int getTotalCount(long opn, PagingVO pgvo);
+	HospitalVO getDetailByMgtno(String mgtno);
+	int update(HospitalVO hvo);
 }

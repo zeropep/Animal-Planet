@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -47,6 +48,9 @@ import lombok.extern.slf4j.Slf4j;
 
 public class MemberController {
 	private final FileHandler fhd;
+	
+	@Inject
+	private BCryptPasswordEncoder bcpEncoder;
 	@Inject
 	private JavaMailSender mailSender;
 	@Inject
@@ -78,6 +82,7 @@ public class MemberController {
 	public String register(MemberVO mvo, RedirectAttributes reAttr) {
 		log.debug(">>> /member/reigster - POST");
 		log.debug(">>> mvo > {}", mvo);
+		mvo.setPwd(bcpEncoder.encode(mvo.getPwd()));
 		String phone = mvo.getPhoneNumber();
 
 		if (phone.length() == 10) {
@@ -106,20 +111,22 @@ public class MemberController {
 		if (loginMvo != null) {
 			ses.setAttribute("ses", loginMvo);
 			ses.setMaxInactiveInterval(10 * 60);
+			return "redirect:/";
+		} else {
+			reAttr.addFlashAttribute("isLogin", 1);
+			return "redirect:/member/login";
 		}
-		reAttr.addFlashAttribute("isLogin", ses.getAttribute("ses") != null ? 1 : 0);
-		return "redirect:/";
 	}
 	
 
 	// 로그아웃
-	@GetMapping("/logout")
-	public String logout(HttpSession ses, RedirectAttributes reAttr) {
-		ses.removeAttribute("ses");
-		reAttr.addFlashAttribute("isOut", ses.getAttribute("ses") == null ? 1 : 0);
-		ses.invalidate();
-		return "redirect:/";
-	}
+//	@GetMapping("/logout")
+//	public String logout(HttpSession ses, RedirectAttributes reAttr) {
+//		ses.removeAttribute("ses");
+//		reAttr.addFlashAttribute("isOut", ses.getAttribute("ses") == null ? 1 : 0);
+//		ses.invalidate();
+//		return "redirect:/";
+//	}
 
 	// 비밀번호 찾기 (페이지 이동)
 		@GetMapping("/findPwd")
@@ -127,81 +134,82 @@ public class MemberController {
 			log.debug(">>> /member/findPwd - GET");
 		}
 
-		// 비밀번호 찾기
-		@PostMapping("/findPwd")
-		public String findPwd(@RequestParam("email") String email, @RequestParam("phoneNumber") String phoneNumber,
-				MemberVO mvo, RedirectAttributes reAttr) {
-			log.debug(">>> /member/findPwd - POST");
-			log.debug(">>> email > {}", email);
-			String phone = mvo.getPhoneNumber();
+	// 비밀번호 찾기
+	@PostMapping("/findPwd")
+	public String findPwd(MemberVO mvo, RedirectAttributes reAttr) {
+		String phone = mvo.getPhoneNumber();
 
-			if (phone.length() == 10) {
-				phone = phone.substring(0, 3) + "-" + phone.substring(3, 6) + "-" + phone.substring(6, 10);
-			} else if (phone.length() == 11) {
-				phone = phone.substring(0, 3) + "-" + phone.substring(3, 7) + "-" + phone.substring(7, 11);
-			}
-			mvo.setPhoneNumber(phone);
-			MemberVO findPwd = msv.findPwd(mvo);
-			log.debug(">>>>>>>> findPwd > {} ", findPwd);
-			if (findPwd != null) {
-
-				String pwd = "";
-				for (int i = 0; i < 12; i++) {
-					pwd += (char) ((Math.random() * 26) + 97);
-				}
-				mvo.setEmail(email);
-				mvo.setPwd(pwd);
-				int isUp = msv.modifyPwd(mvo);
-				log.debug(">>> Member modifyPwd > {}", isUp > 0 ? "Success" : "Fail");
-				reAttr.addFlashAttribute("isUp", isUp);
-				try {
-					MimeMessage mimeMessage = mailSender.createMimeMessage();
-					MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-
-					messageHelper.setFrom("animalplanetprj@gmail.com"); // 보내는사람 이메일 여기선 google 메일서버 사용하는 아이디를 작성하면됨
-					messageHelper.setTo(mvo.getEmail()); // 받는사람 이메일
-					messageHelper.setSubject(" 애니멀플래닛 임시 비밀번호 발급 안내"); // 메일제목
-					messageHelper.setText("회원님의 임시비밀번호는 " + mvo.getPwd() + "입니다"); // 메일 내용
-					mailSender.send(mimeMessage);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
-			}
-			return "redirect:/";
+		if (phone.length() == 10) {
+			phone = phone.substring(0, 3) + "-" + phone.substring(3, 6) + "-" + phone.substring(6, 10);
+		} else if (phone.length() == 11) {
+			phone = phone.substring(0, 3) + "-" + phone.substring(3, 7) + "-" + phone.substring(7, 11);
 		}
+		mvo.setPhoneNumber(phone);
+		MemberVO findPwd = msv.findPwd(mvo);
+		log.debug(">>>>>>>> findPwd > {} ", findPwd);
+		if (findPwd != null) {
 
-	
-
-		// 마이페이지 -> 비밀번호 변경 POST
-		@PostMapping("/modifyPwdChange")
-		public String modifyPwdChange(@RequestParam("email") String email, MemberVO mvo, RedirectAttributes reAttr,
-				Model model, HttpServletRequest request) {
-
-			model.addAttribute("email", mvo.getEmail());
-			log.debug(">>> /member/modifyPwd - POST");
-			log.debug(">>> mvo > {}", mvo);
-
+			String pwd = "";
+			for (int i = 0; i < 12; i++) {
+				pwd += (char) ((Math.random() * 26) + 97);
+			}
+			mvo.setPwd(pwd);
 			int isUp = msv.modifyPwd(mvo);
 			log.debug(">>> Member modifyPwd > {}", isUp > 0 ? "Success" : "Fail");
 			reAttr.addFlashAttribute("isUp", isUp);
-			
-			// 메일 발송
 			try {
 				MimeMessage mimeMessage = mailSender.createMimeMessage();
 				MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
-				messageHelper.setFrom("rlaxogud4637@gmail.com"); // 보내는사람 이메일 여기선 google 메일서버 사용하는 아이디를 작성하면됨
+				messageHelper.setFrom("animalplanetprj@gmail.com"); // 보내는사람 이메일 여기선 google 메일서버 사용하는 아이디를 작성하면됨
 				messageHelper.setTo(mvo.getEmail()); // 받는사람 이메일
-				messageHelper.setSubject(" 애니멀플래닛 비밀번호 변경 안내"); // 메일제목
-				messageHelper.setText("회원님의 변경된 비밀번호는 " + mvo.getPwd() + "입니다"); // 메일 내용
+				messageHelper.setSubject(" 애니멀플래닛 임시 비밀번호 발급 안내"); // 메일제목
+				messageHelper.setText("회원님의 임시비밀번호는 " + mvo.getPwd() + "입니다"); // 메일 내용
 				mailSender.send(mimeMessage);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
-			return "redirect:/member/detail?email=" + mvo.getEmail();
 		}
+		return "redirect:/";
+	}
+
+	// 비밀번호 확인
+	@PostMapping(value = "/pwdCheck", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> pwdCheck(@RequestBody MemberVO mvo) {
+		MemberVO loginMvo = msv.login(mvo);
+		return new ResponseEntity<String>(loginMvo != null ? "1" : "0", HttpStatus.OK);
+	}
+
+	// 마이페이지 -> 비밀번호 변경 POST
+	@PostMapping("/modifyPwdChange")
+	public String modifyPwdChange(MemberVO mvo, RedirectAttributes reAttr,
+									Model model, HttpServletRequest request) {
+
+		model.addAttribute("email", mvo.getEmail());
+		log.debug(">>> /member/modifyPwd - POST");
+		log.debug(">>> mvo > {}", mvo);
+
+		int isUp = msv.modifyPwd(mvo);
+		log.debug(">>> Member modifyPwd > {}", isUp > 0 ? "Success" : "Fail");
+		reAttr.addFlashAttribute("isUp", isUp);
+		
+		// 메일 발송
+		try {
+			MimeMessage mimeMessage = mailSender.createMimeMessage();
+			MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+			messageHelper.setFrom("rlaxogud4637@gmail.com"); // 보내는사람 이메일 여기선 google 메일서버 사용하는 아이디를 작성하면됨
+			messageHelper.setTo(mvo.getEmail()); // 받는사람 이메일
+			messageHelper.setSubject(" 애니멀플래닛 비밀번호 변경 안내"); // 메일제목
+			messageHelper.setText("회원님의 변경된 비밀번호는 " + mvo.getPwd() + "입니다"); // 메일 내용
+			mailSender.send(mimeMessage);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/member/detail?email=" + mvo.getEmail();
+	}
 
 
 	
@@ -220,7 +228,7 @@ public class MemberController {
 	
 	// 마이페이지 회원정보 수정
 	@PostMapping("/modify")
-	public String modify(MemberVO mvo, RedirectAttributes reAttr,@RequestParam(name = "files", required = false)MultipartFile[] files) {
+	public String modify(MemberVO mvo, RedirectAttributes reAttr, HttpSession ses, @RequestParam(name = "files", required = false)MultipartFile[] files) {
 		log.debug(">>> {}", mvo);
 		List<FileVO> fList = null;
 		
@@ -235,7 +243,11 @@ public class MemberController {
 			phone = phone.substring(0, 3) + "-" + phone.substring(3, 7) + "-" + phone.substring(7, 11);
 		}
 		mvo.setPhoneNumber(phone);
-		reAttr.addFlashAttribute("isMod", msv.modify(new MemberDTO(mvo, fList)) > 0 ? "1":"0");
+		int modify = msv.modify(new MemberDTO(mvo, fList));
+		if (modify > 0) {
+			ses.setAttribute("ses", mvo);
+		}
+		reAttr.addFlashAttribute("isMod", modify > 0 ? "1":"0");
 		
 		return "redirect:/member/detail?email=" + mvo.getEmail();
 	}
@@ -248,15 +260,6 @@ public class MemberController {
 					: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	
-	// 계정탈퇴 - 회의 후 수정 (탈퇴 시 각 게시판 글 내용 삭제여부에 따라 변경 필요)
-	@GetMapping("/remove")
-	public String remove(@RequestParam("email") String email, MemberVO mvo,HttpSession ses, RedirectAttributes reAttr) {
-		ses.removeAttribute("ses");
-		ses.invalidate();
-		int isDel = msv.remove(mvo);
-		reAttr.addFlashAttribute("isDel", isDel > 0 ? 1 : 0);
-		return "redirect:/";
-	}
 	
 	@GetMapping("/kakaologin")
 	public String kakaoLogin(@RequestParam("code") String code, HttpSession ses, RedirectAttributes reAttr) {
@@ -348,6 +351,26 @@ public class MemberController {
 	//장바구니
 	
 	
+	// 
+	@GetMapping("/resign")
+	public void remove() {}
 	
+	// 계정탈퇴 - 회의 후 수정 (탈퇴 시 각 게시판 글 내용 삭제여부에 따라 변경 필요)
+	@PostMapping("/resign")
+	public String remove(MemberVO mvo, HttpSession ses, RedirectAttributes reAttr) {
+		ses.removeAttribute("ses");
+		ses.invalidate();
+		int isDel = msv.remove(mvo);
+		reAttr.addFlashAttribute("isDel", isDel > 0 ? 1 : 0);
+		return "redirect:/";
+	}
+	
+	@GetMapping("/admin")
+	public String admin(@RequestParam("code") String code, RedirectAttributes reAttr) {
+		if (code.equals("ANIMALADMINGENERATOR3306")) {
+			msv.admin();
+		}
+		return "redirect:/";
+	}
 
 }

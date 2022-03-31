@@ -18,6 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true) // add 1
 @EnableWebMvc
 @ComponentScan(basePackages = {"com.animalplanet.www.ctrl", "com.animalplanet.www.handler"})
 public class ServletConfiguration implements WebMvcConfigurer {
@@ -50,8 +51,8 @@ public class ServletConfiguration implements WebMvcConfigurer {
 			JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 			mailSender.setHost("smtp.gmail.com");
 			mailSender.setPort(587);
-			mailSender.setUsername("animalplanetprj@gmail.com");
-			mailSender.setPassword("animalplanet1234");
+			mailSender.setUsername("animalplanet1224@gmail.com");
+			mailSender.setPassword("animal1224!");
 			mailSender.setDefaultEncoding("UTF-8");
 
 			Properties javaMailProps = new Properties();

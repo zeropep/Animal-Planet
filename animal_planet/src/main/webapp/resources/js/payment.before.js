@@ -2,8 +2,22 @@ const customer = document.getElementById("customerInfo");
 const receiver = document.getElementById("receiverInfo");
 const payment = document.getElementById("paymentInfo");
 const payBtn = document.getElementById("payBtn");
+const agreement = document.getElementById("agreement");
+const payWith = document.getElementById("option");
 
 let cartList = null;
+let paymentCheck = false;
+let agreementCheck = false;
+
+payWith.addEventListener("change", () => {
+    payWith.value == "Choose..." ? paymentCheck = false : paymentCheck = true;
+    paymentCheck && agreementCheck ? payBtn.disabled = false : payBtn.disabled = true;
+})
+
+agreement.addEventListener("change", () => {
+    agreement.checked ? agreementCheck = true : agreementCheck = false;
+    paymentCheck && agreementCheck ? payBtn.disabled = false : payBtn.disabled = true;
+})
 
 async function saveCart(email) {
     try {
@@ -52,25 +66,27 @@ async function insertOrder(orderList) {
     }
 }
 
-payBtn.addEventListener("click", () => {
+payBtn.addEventListener("click", (e) => {
+    e.preventDefault();
     let orderList = [];
     for (let cart of cartList) {
         let data = {
             cartno: cart.cartno,
             buyer: cart.owner,
             price: cart.price,
+            totalPrice: cart.cartStock * cart.price,
             pname: cart.pname,
             npno: cart.npno,
             payment: "Y",
             method: "cart",
             request: document.getElementById("request").value,
-            payWith: document.getElementById("option").value,
+            payWith: payWith.value,
             amount: cart.cartStock,
         }
-        console.log(data.payWith);
         orderList.push(data);
     }
     insertOrder(orderList).then(result => {
+        console.log(result);
         if (parseInt(result)) {
             location.href = `/payment/after`;
         }

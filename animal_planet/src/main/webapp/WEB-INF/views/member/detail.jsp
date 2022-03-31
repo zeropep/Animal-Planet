@@ -26,7 +26,7 @@
             <a href="/member/modifyPwd?email=${ses.email }" class="list-group-item list-group-item-action">비밀번호 변경</a>
             <a href="/member/myboard?email=${ses.email }" class="list-group-item list-group-item-action">내가 쓴 글</a>
             <a href="/member/myorder?email=${ses.email }" class="list-group-item list-group-item-action">결제 목록</a>
-            <a href="/member/remove?email=${ses.email }" class="list-group-item list-group-item-action">회원 탈퇴</a></div>
+            <a href="/member/resign?email=${ses.email }" class="list-group-item list-group-item-action">회원 탈퇴</a></div>
 				<!--/.box -->
 			</aside>
           <div class="col-md-9">

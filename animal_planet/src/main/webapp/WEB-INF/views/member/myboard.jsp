@@ -26,7 +26,7 @@
             <a href="/member/modifyPwd?email=${ses.email }" class="list-group-item list-group-item-action">비밀번호 변경</a>
             <a href="/member/myboard?email=${ses.email }" class="list-group-item list-group-item-action active">내가 쓴 글</a>
             <a href="/member/myorder?email=${ses.email }" class="list-group-item list-group-item-action">결제 목록</a>
-            <a href="/member/remove?email=${ses.email }" class="list-group-item list-group-item-action">회원 탈퇴</a></div>
+            <a href="/member/resign?email=${ses.email }" class="list-group-item list-group-item-action">회원 탈퇴</a></div>
 				<!--/.box -->
 			</aside>
           <div class="col-md-9">
@@ -47,21 +47,30 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${list }" var="bvo">
-						<tr class="border-bottom">
-							<th scope="row" class="small">
-							<c:choose>
-								<c:when test="${bvo.getBCate() eq 'free'}">[자유게시판]</c:when>
-								<c:when test="${bvo.getBCate() eq 'parcel'}">[분양게시판]</c:when>
-								<c:when test="${bvo.getBCate() eq 'lost'}">[분실게시판]</c:when>
-							</c:choose>
-							</th>
-							<td class="small"><a href="/${bvo.getBCate() }board/detail?bno=${bvo.bno }">${bvo.title }</a></td>
-							<td class="small text-center">${bvo.nickName }</td>
-							<td class="small text-center">${fn:substring(bvo.regAt,0,10) }</td>
-							<td class="small text-center">${bvo.readCount }</td>
-						</tr>
-					</c:forEach>
+					<c:choose>
+						<c:when test="${list.size() > 0 }">
+							<c:forEach items="${list }" var="bvo">
+								<tr class="border-bottom">
+									<th scope="row" class="small">
+									<c:choose>
+										<c:when test="${bvo.getBCate() eq 'free'}">[자유게시판]</c:when>
+										<c:when test="${bvo.getBCate() eq 'parcel'}">[분양게시판]</c:when>
+										<c:when test="${bvo.getBCate() eq 'lost'}">[분실게시판]</c:when>
+									</c:choose>
+									</th>
+									<td class="small"><a href="/${bvo.getBCate() }board/detail?bno=${bvo.bno }">${bvo.title }</a></td>
+									<td class="small text-center">${bvo.nickName }</td>
+									<td class="small text-center">${fn:substring(bvo.regAt,0,10) }</td>
+									<td class="small text-center">${bvo.readCount }</td>
+								</tr>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<tr class="border-bottom">
+								<th scope="row" class="small text-center" colspan="5">등록한 게시물이 없습니다.</th>
+							</tr>
+						</c:otherwise>
+					</c:choose>
 				</tbody>
 			</table>
           <!-- /column -->

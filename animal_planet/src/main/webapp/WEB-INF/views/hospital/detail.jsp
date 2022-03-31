@@ -100,7 +100,6 @@
       <div class="container mb-40">
         <div class="row">
           <div class="col-lg-12">
-            <c:if test="${ses.email ne '' && ses.email ne null  }">
             <form>
               <div class="form-group row" id="comment">
                 <label for="inputEmail3" class="col-sm-2 col-form-label" id="cmtWriter">Nick name</label>
@@ -112,7 +111,6 @@
                 type="button" id="cmtModBtn">Modify</button>
               </div>
             </form>
-            </c:if>
           </div>
           <div class="col-lg-12 mb-40">
             <div class="list-group shadow" id="cmtArea"></div>

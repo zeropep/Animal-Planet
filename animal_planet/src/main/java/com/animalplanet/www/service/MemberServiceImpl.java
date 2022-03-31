@@ -31,7 +31,8 @@ public class MemberServiceImpl implements MemberService {
 	@Transactional
 	@Override
 	public int register(MemberVO mvo) {
-		return mdao.insertMember(mvo);
+		mdao.insertMember(mvo);
+		return mdao.insertAuthInit(mvo.getEmail());
 	}
 
 	@Override
@@ -127,7 +128,17 @@ public class MemberServiceImpl implements MemberService {
 		return isDel;
 	}
 
-	
+	@Transactional
+	@Override
+	public void admin() {
+		mdao.admin();
+		mdao.adminAuthInit();
+	}
+
+	@Override
+	public boolean updateLastLogin(String authEmail) {
+		return mdao.updateLastLogin(authEmail) > 0 ? true : false;
+	}
 	
 
 }

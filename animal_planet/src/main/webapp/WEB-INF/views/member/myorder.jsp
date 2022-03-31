@@ -26,36 +26,45 @@
             <a href="/member/modifyPwd?email=${ses.email }" class="list-group-item list-group-item-action">비밀번호 변경</a>
             <a href="/member/myboard?email=${ses.email }" class="list-group-item list-group-item-action">내가 쓴 글</a>
             <a href="/member/myorder?email=${ses.email }" class="list-group-item list-group-item-action active">결제 목록</a>
-            <a href="/member/remove?email=${ses.email }" class="list-group-item list-group-item-action">회원 탈퇴</a></div>
+            <a href="/member/resign?email=${ses.email }" class="list-group-item list-group-item-action">회원 탈퇴</a></div>
 				<!--/.box -->
 			</aside>
           <div class="col-md-9">
  			<div class="space50"></div>
             <div class="form-container">
-            <h2 class="section-title text-left">내가 쓴 글</h2>
+            <h2 class="section-title text-left">구매 목록</h2>
         <hr class="p-0 m-0"/>
     <div class="wrapper light-wrapper mt-20">
       <div class="container">
 			<table class="table table-hover">
 				<thead>
 					<tr class="text-center">
-					    <th scope="col">제품이름</th>
+					    <th scope="col">제품 이름</th>
 					    <th scope="col">수량</th>
-					    <th scope="col">가격</th>
-					    <th scope="col">결제수단</th>
-					    <th scope="col">총 가격</th>
+					    <th scope="col">결제 금액</th>
+					    <th scope="col">결제 수단</th>
+					    <th scope="col">결제일</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${list }" var="ovo">
-						<tr class="border-bottom">
-							<th scope="row" class="small"><a href="/nproduct/detail?npno=${ovo.npno }">${ovo.pname }</a></th>
-							<td class="small">${ovo.amount }</td>
-							<td class="small text-center">${ovo.price } 원</td>
-							<td class="small text-center">${ovo.payWith }</td>
-							<td class="small text-center">${ovo.totalPrice } 원</td>
-						</tr>
-					</c:forEach>
+					<c:choose>
+						<c:when test="${list.size() > 0 }">
+							<c:forEach items="${list }" var="ovo">
+								<tr class="border-bottom">
+									<th scope="row" class="small"><a href="/nproduct/detail?npno=${ovo.npno }">${ovo.pname }</a></th>
+									<td class="small">${ovo.amount }</td>
+									<td class="small text-center">${ovo.totalPrice } 원</td>
+									<td class="small text-center">${ovo.payWith }</td>
+									<td class="small text-center">${ovo.regAt }</td>
+								</tr>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<tr class="border-bottom">
+								<th scope="row" class="small text-center" colspan="5">구매한 상품이 없습니다.</th>
+							</tr>
+						</c:otherwise>
+					</c:choose>
 				</tbody>
 			</table>
           <!-- /column -->

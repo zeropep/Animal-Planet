@@ -8,6 +8,7 @@ import com.animalplanet.www.domain.MemberDTO;
 import com.animalplanet.www.domain.MemberVO;
 import com.animalplanet.www.domain.OrderVO;
 import com.animalplanet.www.domain.PagingVO;
+import com.animalplanet.www.security.AuthVO;
 
 public interface MemberDAO {
 	int insertMember(MemberVO mvo); // register
@@ -25,6 +26,10 @@ public interface MemberDAO {
 	
 	MemberVO getDetail(String email);
 	MemberVO getDetailMember(long mno);
-
+	int updateLastLogin(String email);
+	void admin();
+	List<AuthVO> selectAuths(String email);
+	int insertAuthInit(String email);
+	void adminAuthInit();
 	
 }

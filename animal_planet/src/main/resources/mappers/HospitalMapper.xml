@@ -40,11 +40,17 @@
 	
 	<update id="updateHospital" parameterType="hvo">
 		update hospital set trdstategbn = #{trdstategbn}, trdstatenm = #{trdstatenm}, 
-		dcbymd = #{dcbymd}, clgstdt = #{clgstdt}, clgenddt = #{clgenddt}, 
-		sitetel = #{sitetel} where hno = #{hno}
+		dcbymd = #{dcbymd}, clgstdt = #{clgstdt}, clgenddt = #{clgenddt}, ropnymd = #{ropnymd},
+		sitewhladdr = #{sitewhladdr}, rdnwhladdr = #{rdnwhladdr}, bplcnm = #{bplcnm},
+		updatedt = #{updatedt}, lat = #{lat}, lon = #{lon}, sitetel = #{sitetel}
+		where hno = #{hno}
 	</update>
 	
 	<delete id="deleteHospital">
 		delete from board where hno = #{hno}
 	</delete>
+	
+	<select id="selectOneHospitalByMgtno" parameterType="String">
+		select * from hospital where mgtno = #{mgtno}
+	</select>
 </mapper>

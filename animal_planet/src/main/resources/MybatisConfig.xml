@@ -10,6 +10,7 @@
 		<typeAlias type="com.animalplanet.www.domain.HospitalVO" alias="hvo"/>
 		<typeAlias type="com.animalplanet.www.domain.CommentVO" alias="cvo"/>
 		<typeAlias type="com.animalplanet.www.domain.MemberVO" alias="mvo"/>
+		<typeAlias type="com.animalplanet.www.security.AuthVO" alias="authVO"/>
 		<typeAlias type="com.animalplanet.www.domain.CartVO" alias="cavo"/>
 		<typeAlias type="com.animalplanet.www.domain.BoardVO" alias="bvo"/>
 		<typeAlias type="com.animalplanet.www.domain.FileVO" alias="fvo"/>

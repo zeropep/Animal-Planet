@@ -4,8 +4,19 @@
 <jsp:include page="../common/header.jsp" />
 <jsp:include page="../common/nav.jsp" />
 
-결제완료
+    <div class="wrapper light-wrapper" style="height: 82.2vh">
+      <div class="container inner h-100">
+        <h1 class="section-title mb-40 text-center mt-150">결제가 완료되었습니다.</h1>
+        <div class="row">
+          <div class="col-lg-8 offset-lg-2 text-center">
+			<a href="/" class="btn">홈으로</a>
+          </div>
+          <!-- /column -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container -->
+    </div>
 
-<a href="/" class="btn">홈으로</a>
 
 <jsp:include page="../common/footer.jsp" />

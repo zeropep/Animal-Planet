@@ -12,7 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.animalplanet.www.domain.PagingVO;
 import com.animalplanet.www.handler.PagingHandler;
-import com.animalplanet.www.handler.test;
+import com.animalplanet.www.handler.HospitalAPI;
 import com.animalplanet.www.service.HospitalService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,8 +27,8 @@ public class HospitalController {
 	
 	@GetMapping("/register")
 	public String register(RedirectAttributes reAttr) throws Exception {
-		test test = new test();
-		test.insertTest(hsv);
+		HospitalAPI test = new HospitalAPI();
+		test.insert(hsv);
 		return "redirect:/";
 	}
 	

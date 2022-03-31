@@ -29,15 +29,13 @@
    	</tr>
    	<tr>
    	  <th scope="row">휴대폰번호</th>
-   	  <c:set var="phone" value="${mvo.phoneNumber }"></c:set>
-   	  <td colspan="4">${fn:substring(phone, 0, 3) } - ${fn:substring(phone, 3, 7) }
-   	  					 - ${fn:substring(phone, 7, 11) }</td>
+   	  <td colspan="4">${mvo.phoneNumber }</td>
    	</tr>
   </tbody>
 </table>
 
 <h3 class="my-4 d-flex d-inline-block">받는사람정보</h3>
-<button type="button" class="btn btn-secondary">배송지 변경</button>
+<!-- <button type="button" class="btn btn-secondary">배송지 변경</button> -->
 <table class="table table-hover mb-5" if="receiveInfo">
   <thead>
     <tr>
@@ -59,8 +57,7 @@
    	</tr>
    	<tr>
    	  <th scope="row">휴대폰번호</th>
-   	  <td colspan="4">${fn:substring(phone, 0, 3) } - ${fn:substring(phone, 3, 7) }
-   	  					 - ${fn:substring(phone, 7, 11) }</td>
+   	  <td colspan="4">${mvo.phoneNumber }</td>
    	</tr>
    	<tr>
    	  <th scope="row">배송 요청사항</th>
@@ -116,7 +113,7 @@
 	<input class="my-3" type="checkbox" value="remember-me" id="agreement" required> 구매조건 확인 및 결제대행 서비스 약관 동의
 	
 	<div class="row my-5 d-flex justify-content-center">
-	  <button type="button" style="width:300px;" class="btn btn-lg btn-primary d-inline-block" id="payBtn">결제하기</button>
+	  <button type="button" style="width:300px;" class="btn btn-lg btn-primary d-inline-block" id="payBtn" disabled>결제하기</button>
 	</div>
 </form>
 </div>

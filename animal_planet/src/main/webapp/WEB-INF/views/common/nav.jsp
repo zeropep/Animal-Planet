@@ -63,7 +63,7 @@
 				      <ul class="dropdown-menu">
 				        <li class="nav-item"><a href="/member/detail?email=${ses.email }"  class="dropdown-item">내 프로필</a></li>
 				        <li class="nav-item"><a href="/member/modify?email=${ses.email }&mno=${mvo.mno }"  class="dropdown-item">정보 수정</a></li>
-				        <li class="nav-item"><a href="/member/detail?email=${ses.email }"  class="dropdown-item">비밀번호 변경</a></li>
+				        <li class="nav-item"><a href="/member/modifyPwd?email=${ses.email }"  class="dropdown-item">비밀번호 변경</a></li>
 				        <li class="nav-item"><a href="/member/myboard?email=${ses.email }"  class="dropdown-item">내가 쓴 글</a></li>
 				        <li class="nav-item"><a href="/member/myorder?email=${ses.email }"  class="dropdown-item">결제 목록</a></li>
 				        <li class="nav-item"><a class="dropdown-item" href="/member/logout">로그아웃</a></li>

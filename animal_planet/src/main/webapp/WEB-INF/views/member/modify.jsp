@@ -25,9 +25,9 @@
             <div class="list-group shadow mt-10"> 
             <a href="/member/detail?email=${ses.email }" class="list-group-item list-group-item-action active">내 프로필</a>
             <a href="/member/modifyPwd?email=${mvo.email }" class="list-group-item list-group-item-action">비밀번호 변경</a>
-            <a href="#" class="list-group-item list-group-item-action">내가 쓴 글</a>
-            <a href="#" class="list-group-item list-group-item-action">결제 목록</a>
-            <a href="/member/remove?email=${ses.email }" class="list-group-item list-group-item-action">회원 탈퇴</a></div>
+            <a href="/member/myboard?email=${ses.email }" class="list-group-item list-group-item-action">내가 쓴 글</a>
+            <a href="/member/myorder?email=${ses.email }" class="list-group-item list-group-item-action">결제 목록</a>
+            <a href="/member/resign?email=${ses.email }" class="list-group-item list-group-item-action">회원 탈퇴</a></div>
 				<!--/.box -->
 			</aside>
           <div class="col-md-9">
@@ -41,7 +41,6 @@
         <div class="row w-100">
             <blockquote class="bordered">
               <p class="col-6 float-left">이메일 : <input type="text" id="email" name="email" value="${ses.email }" class="form-control" readonly></p>
-              <p class="col-6 float-left">비밀번호 : <input type="password" id="pwd" name="pwd" value="${mvo.pwd }" class="form-control" readonly></p>
               <p class="col-6 float-left">이름 : <input type="text" id="name" name="name" value="${mvo.name }" class="form-control" ></p>
               <p class="col-6 float-left">닉네임 : <input type="text" id="nickName" name="nickName" value="${mvo.nickName}" class="form-control" ></p>
               <p class="col-6 float-left">연락처 : <input type="text" id="phoneNumber" name="phoneNumber" value="${mvo.phoneNumber }" class="form-control" ></p>

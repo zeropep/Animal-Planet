@@ -28,6 +28,9 @@
       <div class="container inner">
         <div class="row">
           <div class="col-lg-3 mx-auto shadow p-4 mt-40" style="background-color:#fff;border-radius:10px;">
+          	<div class="text-center my-2">
+          	  <a href="/"><img class="" alt="" src="/resources/style/images/logo2.png"></a>
+          	</div>
             <h2 class="section-title mb-40 text-center">로그인</h2>
             <form action="/member/login" method="post" class=mx-auto>
               <div class="form-group">
@@ -48,6 +51,9 @@
               <div class="form-group text-center">
                <a href="/member/findPwd">비밀번호 찾기 &rarr;</a>
                </div>
+              <div class="form-group text-center">
+               <a href="/member/register">회원가입하기 &rarr;</a>
+               </div>
               
             </form>
             <!-- /form -->
@@ -59,7 +65,12 @@
       <!-- /.container -->
     </div>
 
-
+<script>
+	let isLogin = '<c:out value="${isLogin}"/>';
+	if (parseInt(isLogin)) {
+		alert("이메일 또는 비밀번호가 일치하지 않습니다.")
+	}
+</script>
 
     
   </body>

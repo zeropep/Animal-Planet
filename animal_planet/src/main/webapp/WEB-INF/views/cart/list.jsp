@@ -9,7 +9,7 @@
 <table class="table table-hover mb-5">
   <thead>
     <tr>
-      <th scope="col">썸네일자리</th>
+      <th scope="col">아이템</th>
       <th scope="col">제품이름</th>
       <th scope="col">수량</th>
       <th scope="col">가격</th>

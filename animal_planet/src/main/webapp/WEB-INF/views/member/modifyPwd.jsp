@@ -4,44 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="../common/header.jsp" />
 <jsp:include page="../common/nav.jsp" />
- <script>
- function isSame() {
-	    var pwd =  document.getElementById('pwd').value;
-	    var checkPwd =  document.getElementById('checkPwd').value;
-	    if (pwd.length < 4 || pwd.length > 16) {
-	        window.alert('비밀번호는 4글자 이상, 16글자 이하만 이용 가능합니다.');
-	        document.getElementById('pwd').value=document.getElementById('checkPwd').value='';
-	        document.getElementById('same').innerHTML='';
-	    }
-	    if(document.getElementById('pwd').value!='' && document.getElementById('checkPwd').value!='') {
-	        if(document.getElementById('pwd').value==document.getElementById('checkPwd').value) {
-	            document.getElementById('same').innerHTML='비밀번호가 일치합니다.';
-	            document.getElementById('same').style.color='blue';
-	        }
-	        else {
-	            document.getElementById('same').innerHTML='비밀번호를 다시 확인해주세요.';
-	            document.getElementById('same').style.color='red';
-	        }
-	    }
-	}
 
-</script>
-
-<script>
-function check() {
-	  if(fr.pwd.value==fr.pwd.checkPwd.value) {
-		  
-    return true;
-
-  }else if(fr.pwd.value!=fr.checkPwd.value) {
-    alert("변경할 비밀번호를 확인해주세요!");
-    fr.pwd.focus();
-    return false;
-
-  }
-
-}
-</script>
 <main>
 	<div class="container inner h-100">
 		<div class="row">
@@ -63,15 +26,15 @@ function check() {
             <a href="/member/modifyPwd?email=${ses.email }" class="list-group-item list-group-item-action active">비밀번호 변경</a>
             <a href="/member/myboard?email=${ses.email }" class="list-group-item list-group-item-action">내가 쓴 글</a>
             <a href="/member/myorder?email=${ses.email }" class="list-group-item list-group-item-action">결제 목록</a>
-            <a href="/member/remove?email=${ses.email }" class="list-group-item list-group-item-action">회원 탈퇴</a></div>
+            <a href="/member/resign?email=${ses.email }" class="list-group-item list-group-item-action">회원 탈퇴</a></div>
 				<!--/.box -->
 			</aside>
           <div class="col-md-9">
- <div class="space50"></div>
+ 			<div class="space50"></div>
             <div class="form-container">
             <h2 class="section-title text-left">비밀번호 변경</h2>
         <hr class="p-0 m-0"/>
-	<form action="/member/modifyPwdChange" name="fr" method="post" onsubmit="return check()">
+	<form action="/member/modifyPwdChange" name="fr" method="post">
     <div class="wrapper light-wrapper">
       <div class="container p-3 mt-30">
         <div class="row w-100">
@@ -82,6 +45,18 @@ function check() {
           <p><input type="hidden" id="email" name="email" value="${ses.email }" class="form-control"></p>
         </div>
       </div>  
+<!--       변경할 비밀번호                -->
+      
+      <div class="col d-flex align-items-start">
+        <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#cpu-fill"/></svg>
+        <div>
+          <p class="fw-bold mb-0">기존 비밀번호 : </p>
+          <p><input type="password" id="oldPwd" name="oldPwd" class="form-control" style="width:480px;" required></p>
+          <button class="btn btn-primary my-1" type="button" id="pwdCheck">기존 비밀번호 확인</button>
+        </div>
+      </div>      
+<!--                                   -->
+
 <!--       변경할 비밀번호                -->
       
       <div class="col d-flex align-items-start">
@@ -98,7 +73,7 @@ function check() {
         <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#cpu-fill"/></svg>
         <div>
           <p class="fw-bold mb-0">비밀번호 확인 : </p>
-          <p><input type="password" id="checkPwd" name="checkPwd" value=""  class="form-control" onchange="isSame()" style="width:480px;" required > <span id="same"></span></p>
+          <p><input type="password" id="checkPwd" name="checkPwd" class="form-control" onchange="isSame()" style="width:480px;" required > <span id="same"></span></p>
         </div>
       </div>
             </blockquote>
@@ -108,7 +83,7 @@ function check() {
       </div>
       <!-- /.container -->
     </div>
-      <button class="float-right btn btn-primary btn-lg my-5" type="submit" onchange="isSame()" >비밀번호 변경</button>
+      <button class="float-right btn btn-primary btn-lg my-5" type="submit" id="modBtn" disabled>비밀번호 변경</button>
     </form>
     </div>
    </div>
@@ -116,4 +91,6 @@ function check() {
 </div>
 </main>
 
+
+<script src="/resources/js/member/member.modPwd.js"></script>
 <jsp:include page="../common/footer.jsp" />

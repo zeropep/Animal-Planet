@@ -118,8 +118,9 @@
           <div class="items row isotope boxed grid-view text-center">
             <div class="item grid-sizer col-md-6 col-lg-4">
               <div class="box bg-white shadow p-30">
-                <figure class="main mb-20 overlay overlay1 rounded"><img src="/resources/style/images/art/n100.jpg" alt="" />
+                <figure class="main polaroid mb-20 overlay overlay1 rounded"><a><img src="/resources/style/images/art/n100.jpg" alt="" /></a>
                   <figcaption>
+                    <h5 class="text-uppercase from-top mb-0">우리 아이가 간식을 너무 좋아해요~</h5>
                   </figcaption>
                 </figure>
                 <h5 class="mb-0">redd**** 님</h5>
@@ -129,8 +130,9 @@
             <!--/.item -->
             <div class="item grid-sizer col-md-6 col-lg-4">
               <div class="box bg-white shadow p-30">
-                <figure class="main mb-20 overlay overlay1 rounded"><img src="/resources/style/images/art/n101.jpg" alt="" />
+                <figure class="main polaroid mb-20 overlay overlay1 rounded"><a><img src="/resources/style/images/art/n101.jpg" alt="" /></a>
                   <figcaption>
+                    <h5 class="text-uppercase from-top mb-0">방석 너무 졸귀 ㅠㅠㅠ</h5>
                   </figcaption>
                 </figure>
                 <h5 class="mb-0">Egzi** 님</h5>
@@ -140,8 +142,9 @@
             <!--/.item -->
             <div class="item grid-sizer col-md-6 col-lg-4">
               <div class="box bg-white shadow p-30">
-                <figure class="main mb-20 overlay overlay1 rounded"><img src="/resources/style/images/art/n102.jpg" alt="" />
+                <figure class="main polaroid mb-20 overlay overlay1 rounded"><a><img src="/resources/style/images/art/n102.jpg" alt="" /></a>
                   <figcaption>
+                    <h5 class="text-uppercase from-top mb-0">해먹에서 나오질 않아요 ㅋㅋㅋ</h5>
                   </figcaption>
                 </figure>
                 <h5 class="mb-0">Macr***** 님</h5>
@@ -151,8 +154,9 @@
             <!--/.item -->
             <div class="item grid-sizer col-md-6 col-lg-4">
               <div class="box bg-white shadow p-30">
-                <figure class="main mb-20 overlay overlay1 rounded"><img src="/resources/style/images/art/n103.jpg" alt="" />
+                <figure class="main polaroid mb-20 overlay overlay1 rounded"><a><img src="/resources/style/images/art/n103.jpg" alt="" /></a>
                   <figcaption>
+                    <h5 class="text-uppercase from-top mb-0">강아지가 좋아해서 다행이에요</h5>
                   </figcaption>
                 </figure>
                 <h5 class="mb-0">Bird**** 님</h5>
@@ -162,8 +166,9 @@
             <!--/.item -->
             <div class="item grid-sizer col-md-6 col-lg-4">
               <div class="box bg-white shadow p-30">
-                <figure class="main mb-20 overlay overlay1 rounded"><img src="/resources/style/images/art/n104.jpg" alt="" />
+                <figure class="main polaroid mb-20 overlay overlay1 rounded"><a><img src="/resources/style/images/art/n104.jpg" alt="" /></a>
                   <figcaption>
+                    <h5 class="text-uppercase from-top mb-0">이 장난감을 제일 좋아하는거 같아요! 추천해요~</h5>
                   </figcaption>
                 </figure>
                 <h5 class="mb-0">Life*** 님</h5>
@@ -173,8 +178,9 @@
             <!--/.item -->
             <div class="item grid-sizer col-md-6 col-lg-4">
               <div class="box bg-white shadow p-30">
-                <figure class="main mb-20 overlay overlay1 rounded"><img src="/resources/style/images/art/n105.jpg" alt="" />
+                <figure class="main polaroid mb-20 overlay overlay1 rounded"><a><img src="/resources/style/images/art/n105.jpg" alt="" /></a>
                   <figcaption>
+                    <h5 class="text-uppercase from-top mb-0">산책갈때 더 편해졌어요 ㅎㅎ</h5>
                   </figcaption>
                 </figure>
                 <h5 class="mb-0">Geol**** 님</h5>

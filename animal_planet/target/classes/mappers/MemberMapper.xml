@@ -60,13 +60,34 @@
 		select * from history where buyer = #{email}
 		limit #{pgvo.pageStart}, #{pgvo.qty}
 	</select>
+	
 	<select id="selectOneOrderTotalCount" parameterType="String" resultType="int">
 		select count(ohno) from history where ohno > 0 and buyer = #{email}
 	</select>
+	
 	<delete id="delete" parameterType="mvo">
-	delete from member
-	where email = #{email}
-	  
+		delete from member
+		where email = #{email}
 	</delete>
+	
+	<update id="admin">
+		update member set grade = 100 where email = "admin@admin.com";
+	</update>
+	
+	<update id="updateLastLogin" parameterType="String">
+		update member set last_login = now() where email = #{email}
+	</update>
+	
+	<select id="selectAuths" parameterType="String" resultType="authVO">
+		select auth from auth_member where email = #{email}
+	</select>
+	
+	<insert id="insertAuthInit" parameterType="String">
+		insert into auth_member values (#{email}, 'ROLE_USER')
+	</insert>
+	
+	<insert id="adminAuthInit">
+		insert into auth_member values ('admin@admin.com', 'ROLE_ADMIN')
+	</insert>
 
 </mapper>

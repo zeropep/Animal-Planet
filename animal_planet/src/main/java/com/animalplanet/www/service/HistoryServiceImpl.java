@@ -23,7 +23,7 @@ public class HistoryServiceImpl implements HistoryService {
 	
 	@Override
 	public int register(List<OrderVO> list) {
-		int isUp = 0;
+		int isUp = 1;
 		for (OrderVO ovo : list) {
 			ovo.setNpno(Long.valueOf(ovo.getNpno()));
 			isUp *= hidao.insertHistory(ovo);

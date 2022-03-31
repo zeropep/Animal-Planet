@@ -15,4 +15,5 @@ public interface HospitalDAO {
 	int updateHospital(HospitalVO hvo);
 	int deleteHospital(long hno);
 	int selectTotalCount(@Param("opn") long opn, @Param("pgvo") PagingVO pgvo);
+	HospitalVO selectOneHospitalByMgtno(String mgtno);
 }

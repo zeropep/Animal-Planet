@@ -53,4 +53,14 @@ public class HospitalServiceImpl implements HospitalService {
 		return hdao.selectTotalCount(opn, pgvo);
 	}
 
+	@Override
+	public HospitalVO getDetailByMgtno(String mgtno) {
+		return hdao.selectOneHospitalByMgtno(mgtno);
+	}
+
+	@Override
+	public int update(HospitalVO hvo) {
+		return hdao.updateHospital(hvo);
+	}
+
 }

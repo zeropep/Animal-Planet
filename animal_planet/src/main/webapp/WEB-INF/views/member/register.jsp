@@ -24,7 +24,7 @@
               <div class="form-group row">
                 <div class="col-sm-9">
                   <input type="email" class="form-control" name="email"
-                  id="email" placeholder="사용하는 이메일을 입력해주세요. 비밀번호 찾기 및 변경 시 사용됩니다"  required>
+                  id="email" placeholder="사용하는 이메일을 입력해주세요. 비밀번호 찾기 및 변경 시 사용됩니다."  required>
                 </div>
                 <div class="col-sm-3 text-right">
                   <button type="button" class="btn btn-success" id="dupleCheck">중복확인</button>              
@@ -36,13 +36,13 @@
             
             <div class="col-sm-6">
               <label for="pwd" class="form-label">비밀번호</label>
-              <input type="password" class="form-control" name="pwd"
-               id="pwd" placeholder="" value="" required>              
+              <input type="password" class="form-control" name="pwd" pattern=".{4,12}"
+               id="pwd" placeholder="4자리이상 입력해주세요." required>              
             </div>
 
             <div class="col-sm-6">
               <label for="rpwd" class="form-label">비밀번호 확인</label>
-              <input type="password" class="form-control" 
+              <input type="password" class="form-control" pattern=".{4,12}"
               id="rpwd" placeholder="" value="" required>
             </div>
 
@@ -61,7 +61,7 @@
             <div class="col-sm-12">
               <label for="phoneNumber" class="form-label">전화번호</label>
               <input type="text" class="form-control" name="phoneNumber"
-               id="phoneNumber" placeholder="연락처를 입력하세요" value="" required>              
+               id="phoneNumber" placeholder="연락처는 '-'표시를 제외하고 입력해주세요. 예)01012345678" value="" required>              
             </div>
             
             
