@@ -1,5 +1,7 @@
 package com.animalplanet.www.ctrl;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -176,20 +178,24 @@ public class MemberController {
 
 	// 비밀번호 확인
 	@PostMapping(value = "/pwdCheck", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> pwdCheck(@RequestBody MemberVO mvo) {
-		MemberVO loginMvo = msv.login(mvo);
-		return new ResponseEntity<String>(loginMvo != null ? "1" : "0", HttpStatus.OK);
+	public ResponseEntity<String> pwdCheck(@RequestBody MemberVO mvo, HttpServletRequest request) {
+		HttpSession ses = request.getSession();
+		MemberVO loggedInUser = (MemberVO) ses.getAttribute("ses");
+		if (bcpEncoder.matches(mvo.getPwd(), loggedInUser.getPwd())) {
+			return new ResponseEntity<String>("1", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("0", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	// 마이페이지 -> 비밀번호 변경 POST
 	@PostMapping("/modifyPwdChange")
 	public String modifyPwdChange(MemberVO mvo, RedirectAttributes reAttr,
 									Model model, HttpServletRequest request) {
-
+		String userPwd = mvo.getPwd();
 		model.addAttribute("email", mvo.getEmail());
-		log.debug(">>> /member/modifyPwd - POST");
-		log.debug(">>> mvo > {}", mvo);
 
+		mvo.setPwd(bcpEncoder.encode(mvo.getPwd()));
 		int isUp = msv.modifyPwd(mvo);
 		log.debug(">>> Member modifyPwd > {}", isUp > 0 ? "Success" : "Fail");
 		reAttr.addFlashAttribute("isUp", isUp);
@@ -199,10 +205,10 @@ public class MemberController {
 			MimeMessage mimeMessage = mailSender.createMimeMessage();
 			MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
-			messageHelper.setFrom("rlaxogud4637@gmail.com"); // 보내는사람 이메일 여기선 google 메일서버 사용하는 아이디를 작성하면됨
+			messageHelper.setFrom("animalplanet1224@gmail.com"); // 보내는사람 이메일 여기선 google 메일서버 사용하는 아이디를 작성하면됨
 			messageHelper.setTo(mvo.getEmail()); // 받는사람 이메일
 			messageHelper.setSubject(" 애니멀플래닛 비밀번호 변경 안내"); // 메일제목
-			messageHelper.setText("회원님의 변경된 비밀번호는 " + mvo.getPwd() + "입니다"); // 메일 내용
+			messageHelper.setText("회원님의 변경된 비밀번호는 " + userPwd + "입니다"); // 메일 내용
 			mailSender.send(mimeMessage);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -215,8 +221,12 @@ public class MemberController {
 	
 	// 마이페이지 내정보 / 수정 / 비밀번호 변경 GET (페이지 이동)
 	@GetMapping({"/detail", "/modify", "/modifyPwd"})
-	public void detail(@RequestParam("email") String email, Model model) {
-		log.debug(">>> email > {}", email);
+	public void detail(@RequestParam("email") String email, HttpServletRequest request, Model model) {
+		HttpSession ses = request.getSession();
+		MemberVO loggedInUser = (MemberVO) ses.getAttribute("ses");
+		if (!email.equals(loggedInUser.getEmail())) {
+			email = loggedInUser.getEmail();
+		}
 		MemberVO mvo = msv.getDetail(email);
 		long mno =mvo.getMno();
 		
@@ -321,7 +331,12 @@ public class MemberController {
 	
 	//구매내역 리스트 - jsp 페이지 작업 필요 
 	@GetMapping("/myorder")
-	public void list(Model model, PagingVO pagingVO, @RequestParam("email") String email) {
+	public void list(Model model, PagingVO pagingVO, HttpServletRequest request, @RequestParam("email") String email) {
+		HttpSession ses = request.getSession();
+		MemberVO loggedInUser = (MemberVO) ses.getAttribute("ses");
+		if (!email.equals(loggedInUser.getEmail())) {
+			email = loggedInUser.getEmail();
+		}
 		MemberVO mvo = msv.getDetail(email);
 		
 		model.addAttribute("mno", mvo.getMno());
@@ -336,7 +351,12 @@ public class MemberController {
 	
 	// 내가 쓴 글 리스트
 	@GetMapping("/myboard")
-	public void boardList(@RequestParam("email") String email, Model model, PagingVO pagingVO) {
+	public void boardList(@RequestParam("email") String email, HttpServletRequest request, Model model, PagingVO pagingVO) {
+		HttpSession ses = request.getSession();
+		MemberVO loggedInUser = (MemberVO) ses.getAttribute("ses");
+		if (!email.equals(loggedInUser.getEmail())) {
+			email = loggedInUser.getEmail();
+		}
 		MemberVO mvo = msv.getDetail(email);
 		
 		model.addAttribute("mno", mvo.getMno());
@@ -348,16 +368,27 @@ public class MemberController {
 		model.addAttribute("pgn", new PagingHandler(pagingVO, totalCount));
 	}
 
-	//장바구니
-	
-	
 	// 
 	@GetMapping("/resign")
-	public void remove() {}
+	public void remove(@RequestParam("email") String email, HttpServletRequest request, Model model) {
+		HttpSession ses = request.getSession();
+		MemberVO loggedInUser = (MemberVO) ses.getAttribute("ses");
+		if (!email.equals(loggedInUser.getEmail())) {
+			email = loggedInUser.getEmail();
+		}
+		MemberVO mvo = msv.getDetail(email);
+		long mno =mvo.getMno();
+		
+		log.debug(">>> {}", mvo);
+		model.addAttribute("mno", mno);
+		model.addAttribute("mvo", mvo);
+		model.addAttribute("memberDTO", msv.getDetailMember(mno));
+	}
 	
 	// 계정탈퇴 - 회의 후 수정 (탈퇴 시 각 게시판 글 내용 삭제여부에 따라 변경 필요)
 	@PostMapping("/resign")
-	public String remove(MemberVO mvo, HttpSession ses, RedirectAttributes reAttr) {
+	public String remove(MemberVO mvo, HttpServletRequest request, RedirectAttributes reAttr) {
+		HttpSession ses = request.getSession();
 		ses.removeAttribute("ses");
 		ses.invalidate();
 		int isDel = msv.remove(mvo);

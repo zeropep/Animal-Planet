@@ -99,7 +99,6 @@
 			          <div class="col-lg-12">
 			            <form>
 			              <div class="form-group row" id="comment">
-<c:if test="${ses.email ne '' && ses.email ne null  }">
 			                <label for="inputEmail3" class="col-sm-2 col-form-label" id="cmtWriter">${ses.nickName }</label>
 			                <div class="col-sm-8">
 			                  <input type="email" class="form-control" id="cmtText" placeholder="Add Comment">
@@ -107,7 +106,6 @@
 			                <button class="btn btn-success position-relative col-sm-1" type="button" id="cmtPostBtn">등록</button>
 			                <button class="btn btn-pastel-yellow position-relative col-sm-1 hidden" data-cno="" 
 			                type="button" id="cmtModBtn">Modify</button>
-</c:if>
 			              </div>
 			            </form>
 			          </div>

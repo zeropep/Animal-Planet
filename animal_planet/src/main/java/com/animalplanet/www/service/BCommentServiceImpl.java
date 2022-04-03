@@ -22,14 +22,10 @@ public class BCommentServiceImpl implements BCommentService {
 	@Inject
 	private BCommentDAO cdao;
 	
-	@Inject
-	private BoardDAO bdao;
-	
 	@Transactional
 	@Override
 	public int register(CommentVO cvo) {
-		int isUp = cdao.insertBComment(cvo);
-		return isUp;
+		return cdao.insertBComment(cvo);
 	}
 
 	@Override

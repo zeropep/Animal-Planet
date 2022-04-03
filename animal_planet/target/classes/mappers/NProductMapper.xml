@@ -87,4 +87,8 @@
 		update new_product set has_file = #{cnt} where npno = #{npno}
 	</update>
 	
+	<update id="reduceStock" parameterType="ovo">
+		update new_product set stock = stock - #{stock} where npno = #{npno}
+	</update>
+	
 </mapper>

@@ -45,17 +45,19 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		setAuthEmail(authentication.getName());
-		setAuthUrl("/board/list");
+		setAuthUrl("/");
 		
 		boolean isUp = msv.updateLastLogin(getAuthEmail());
 		// 로그인 성공한 계정의 정보들이 authentication에 담겨있다.
 		
 		HttpSession ses = request.getSession(false);
 		// 새로 생성된 세션이 아닌 기존에 존재하는 세션
+		// false: 세션이 없다면 새로 만들지 않는다. 반대는 true또는 비워두기
 		
 		if (!isUp || ses == null) {
 			return;
 		} else {
+			ses.setAttribute("ses", msv.login(msv.getDetail(authEmail)));
 			ses.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
 			// 시큐리티에서 시도한 인증 실패 기록 삭제
 			// 시큐리티 실패하면 이를 캐싱하여 WebAttributes에 기록하는데, 로그인하면 이전까지의 실패 기록을 날린다는 의미

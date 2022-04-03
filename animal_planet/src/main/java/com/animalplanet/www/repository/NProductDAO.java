@@ -3,6 +3,7 @@ package com.animalplanet.www.repository;
 import java.util.List;
 
 import com.animalplanet.www.domain.NProductVO;
+import com.animalplanet.www.domain.OrderVO;
 import com.animalplanet.www.domain.PagingVO;
 
 public interface NProductDAO {
@@ -15,4 +16,5 @@ public interface NProductDAO {
 	List<NProductVO> selectProductListPaging(PagingVO pgvo);
 	int selectOneTotalCount(PagingVO pgvo);
 	long selectOnePno();
+	int reduceStock(OrderVO ovo);
 }

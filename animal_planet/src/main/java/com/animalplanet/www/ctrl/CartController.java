@@ -3,6 +3,8 @@ package com.animalplanet.www.ctrl;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.animalplanet.www.domain.CartVO;
+import com.animalplanet.www.domain.MemberVO;
 import com.animalplanet.www.service.CartService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +39,12 @@ public class CartController {
 	}
 	
 	@GetMapping("/list")
-	public void cartList(@RequestParam("email") String email, Model model) {
+	public void cartList(@RequestParam("email") String email, HttpServletRequest request, Model model) {
+		HttpSession ses = request.getSession();
+		MemberVO loggedInUser = (MemberVO) ses.getAttribute("ses");
+		if (!email.equals(loggedInUser.getEmail())) {
+			email = loggedInUser.getEmail();
+		}
 		model.addAttribute("email", email);
 	}
 	

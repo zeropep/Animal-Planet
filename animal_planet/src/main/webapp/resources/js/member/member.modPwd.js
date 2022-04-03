@@ -60,9 +60,12 @@ pwdCheckBtn.addEventListener("click", (e) => {
     }
     pwdCheck(pwdCheckData).then(result => {
         if (parseInt(result)) {
+            console.log(result);
             alert("비밀번호가 확인되었습니다.");
             modPwdCondition = 1;
             pwdCheckBtn.disabled = true;
+        } else {
+            alert("비밀번호가 일치하지 않습니다.");
         }
     })
 })
