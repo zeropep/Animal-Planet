@@ -28,11 +28,9 @@ public class MemberServiceImpl implements MemberService {
 	@Inject
 	private MemberDAO mdao;
 	
-	@Transactional
 	@Override
 	public int register(MemberVO mvo) {
-		mdao.insertMember(mvo);
-		return mdao.insertAuthInit(mvo.getEmail());
+		return mdao.insertMember(mvo);
 	}
 
 	@Override

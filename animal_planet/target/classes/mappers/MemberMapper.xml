@@ -79,15 +79,11 @@
 	</update>
 	
 	<select id="selectAuths" parameterType="String" resultType="authVO">
-		select auth from auth_member where email = #{email}
+		select auth from member where email = #{email}
 	</select>
 	
-	<insert id="insertAuthInit" parameterType="String">
-		insert into auth_member values (#{email}, 'ROLE_USER')
-	</insert>
-	
-	<insert id="adminAuthInit">
-		insert into auth_member values ('admin@admin.com', 'ROLE_ADMIN')
-	</insert>
+	<update id="adminAuthInit">
+		insert member set auth = 'ROLE_ADMIN' where email = 'admin@admin.com'
+	</update>
 
 </mapper>

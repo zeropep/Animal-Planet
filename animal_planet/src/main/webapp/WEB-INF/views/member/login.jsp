@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="shortcut icon" href="/resources/style/images/favicon.png">
-  <title>Missio</title>
+  <title>Animal Planet</title>
  
  <link rel="stylesheet" type="text/css" href="/resources/style/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="/resources/style/css/plugins.css">
@@ -23,6 +23,12 @@
  
   </head>
   <body>
+  <!-- <div class="alert alert-danger alert-dismissible fade show" role="alert"> 
+  	This is a danger alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like. 
+  	<button type="button" class="close" data-dismiss="alert" aria-label="Close"> 
+  		<span aria-hidden="true">&times;</span> 
+  	</button>
+  </div> -->
   
   <div class="wrapper" style="background-color:#f2f2f2;height:100vh">
       <div class="container inner">
@@ -35,7 +41,8 @@
             <form action="/member/login" method="post" class=mx-auto>
               <div class="form-group">
                 <label for="exampleInputName1">이메일</label>
-                <input type="text" class="form-control" name="email" id="email" placeholder="example@example.com">
+                <input type="text" class="form-control" name="email" id="email" 
+                		placeholder="example@example.com" value="${email }">
               </div>
               <!-- /.form-group -->
               <div class="form-group mb-30">
@@ -54,6 +61,7 @@
               <div class="form-group text-center">
                <a href="/member/register">회원가입하기 &rarr;</a>
                </div>
+               
               
             </form>
             <!-- /form -->
@@ -66,6 +74,14 @@
     </div>
 
 <script>
+	let errMsg = '<c:out value="${errMsg}"/>';
+	if (errMsg != '') {
+		if (errMsg == "Bad credentials") {
+			alert("이메일 또는 비밀번호가 일치하지 않습니다.");
+		} else {
+			alert("관리자에게 문의하세요.");
+		}
+	}
 	let isLogin = '<c:out value="${isLogin}"/>';
 	if (parseInt(isLogin)) {
 		alert("이메일 또는 비밀번호가 일치하지 않습니다.")

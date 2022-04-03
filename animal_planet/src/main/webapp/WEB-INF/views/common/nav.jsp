@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <body>
   <div class="content-wrapper">
@@ -37,51 +38,38 @@
 		</div>
 		
 		<ul class="navbar-nav plain mx-auto text-right align-items-center">
-		  <c:choose>
-        	<c:when test="${ses.email ne null && ses.email ne ''}">
-       			<c:choose>
-       				<c:when test="${ses.grade > 100 }">
-       				<li class="nav-item dropdown"><a class="nav-link dropdown-toggle p-0" href="#">
-       				<i class="fa fa-user-circle nav-link dropdown-toggle"></i></a>
-				      <ul class="dropdown-menu">
-				        <li class="nav-item"><a href="/member/list"  class="dropdown-item">회원 리스트</a></li>
-				        <li class="nav-item"><a href="/member/detail?email=${ses.email }"  class="dropdown-item">내 프로필</a></li>
-				        <li class="nav-item"><a href="/member/modify?email=${ses.email }&mno=${mvo.mno }"  class="dropdown-item">정보 수정</a></li>
-				        <li class="nav-item"><a href="/member/modifyPwd?email=${mvo.email }"  class="dropdown-item">비밀번호 변경</a></li>
-				        <li class="nav-item"><a href="/member/myboard?email=${ses.email }" class="dropdown-item">내가 쓴 글</a></li>
-				        <li class="nav-item"><a href="/member/myorder?email=${ses.email }"  class="dropdown-item">결제 목록</a></li>
-				        <li class="nav-item"><a class="dropdown-item" href="/member/logout">로그아웃</a></li>
-				      </ul>
-         				</li>
-       				<li class="nav-item dropdown"><a class="nav-link dropdown-toggle p-0" href="">
-       				<i class="fa fa-shopping-cart nav-link dropdown-toggle"></i></a>
-         				</li>
-       				</c:when>
-       				<c:otherwise>
-       				<li class="nav-item dropdown"><a class="nav-link dropdown-toggle p-0" href="/member/detail?email=${ses.email }">
-       				<i class="fa fa-user-circle nav-link dropdown-toggle"></i></a>
-				      <ul class="dropdown-menu">
-				        <li class="nav-item"><a href="/member/detail?email=${ses.email }"  class="dropdown-item">내 프로필</a></li>
-				        <li class="nav-item"><a href="/member/modify?email=${ses.email }&mno=${mvo.mno }"  class="dropdown-item">정보 수정</a></li>
-				        <li class="nav-item"><a href="/member/modifyPwd?email=${ses.email }"  class="dropdown-item">비밀번호 변경</a></li>
-				        <li class="nav-item"><a href="/member/myboard?email=${ses.email }"  class="dropdown-item">내가 쓴 글</a></li>
-				        <li class="nav-item"><a href="/member/myorder?email=${ses.email }"  class="dropdown-item">결제 목록</a></li>
-				        <li class="nav-item"><a class="dropdown-item" href="/member/logout">로그아웃</a></li>
-				      </ul>
-         				</li>
-       				<li class="nav-item dropdown">
-       				  <a class="nav-link dropdown-toggle p-0" href="/cart/list?email=${ses.email }"><i class="fa fa-shopping-cart nav-link dropdown-toggle"></i></a>
-         				</li>
-       				</c:otherwise>
-       			</c:choose>
-        	</c:when>
-        	<c:otherwise>
-        		<div class="text-end float-right">
-          			<a href="/member/login"  class="btn btn-outline-light me-2 mt-10">로그인</a>
-          			<a href="/member/register"  class="btn btn-warning mt-10">회원가입</a>
-        		</div>
-        	</c:otherwise>
-          </c:choose>
+		  <sec:authorize access="isAuthenticated()">
+		  	<sec:authentication property="principal.mvo.email" var="authEmail"/>
+            <sec:authentication property="principal.mvo.nickName" var="authNick"/>
+            <sec:authentication property="principal.mvo.authList" var="auths"/>
+       		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle p-0" href="#">
+       		  <i class="fa fa-user-circle nav-link dropdown-toggle"></i></a>
+				<ul class="dropdown-menu">
+				<c:choose>
+				  <c:when test="${auths.stream().anyMatch(authVO -> authVO.auth.equals('ROLE_ADMIN')).get() }">
+					<li class="nav-item"><a href="/member/list"  class="dropdown-item">회원 리스트</a></li>
+				  </c:when>
+				  <c:otherwise>
+					<li class="nav-item"><a href="/member/detail?email=${ses.email }"  class="dropdown-item">내 프로필</a></li>
+				  </c:otherwise>
+				</c:choose>
+				  <li class="nav-item"><a href="/member/modify?email=${ses.email }&mno=${mvo.mno }"  class="dropdown-item">정보 수정</a></li>
+				  <li class="nav-item"><a href="/member/modifyPwd?email=${ses.email }"  class="dropdown-item">비밀번호 변경</a></li>
+				  <li class="nav-item"><a href="/member/myboard?email=${ses.email }"  class="dropdown-item">내가 쓴 글</a></li>
+				  <li class="nav-item"><a href="/member/myorder?email=${ses.email }"  class="dropdown-item">결제 목록</a></li>
+				  <li class="nav-item"><a class="dropdown-item" href="/member/logout">로그아웃</a></li>
+				</ul>
+			</li>
+       		<li class="nav-item dropdown">
+       		  <a class="nav-link dropdown-toggle p-0" href="/cart/list?email=${ses.email }"><i class="fa fa-shopping-cart nav-link dropdown-toggle"></i></a>
+         	</li>
+		  </sec:authorize>
+		  <sec:authorize access="isAnonymous()">
+        	<div class="text-end float-right">
+          	  <a href="/member/login"  class="btn btn-outline-light me-2 mt-10">로그인</a>
+          	  <a href="/member/register"  class="btn btn-warning mt-10">회원가입</a>
+        	</div>
+		  </sec:authorize>
 		</ul>
 		
       </div>

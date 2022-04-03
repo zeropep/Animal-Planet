@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <jsp:include page="../common/header.jsp" />
 <jsp:include page="../common/nav.jsp" />
 
@@ -51,10 +52,13 @@
 			<div class="col-md-9">
 				<h2 class="section-title">자유게시판</h2>
 				<p class="float-left">${pgn.totalCount }개의 글</p>
-				<c:if test="${ses.email ne '' && ses.email ne null  }">
-				<a class="btn btn-outline-primary float-right m-0"
+				<sec:authorize access="isAuthenticated()">
+				  	<sec:authentication property="principal.mvo.email" var="authEmail"/>
+		            <sec:authentication property="principal.mvo.nickName" var="authNick"/>
+		            <sec:authentication property="principal.mvo.authList" var="auths"/>
+					<a class="btn btn-outline-primary float-right m-0"
 					href="/freeboard/register">글쓰기</a>
-				</c:if>
+		        </sec:authorize>
 				<div class="form-container w-100 mt-100">
 					<div class="row">
 						<table class="table table-hover">

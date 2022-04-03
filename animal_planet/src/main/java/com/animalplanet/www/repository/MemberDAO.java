@@ -29,7 +29,6 @@ public interface MemberDAO {
 	int updateLastLogin(String email);
 	void admin();
 	List<AuthVO> selectAuths(String email);
-	int insertAuthInit(String email);
 	void adminAuthInit();
 	
 }

@@ -107,17 +107,20 @@ public class MemberController {
 	
 	// 로그인 POST
 	@PostMapping("/login")
-	public String login(MemberVO mvo, HttpSession ses, RedirectAttributes reAttr) {
-		log.debug(">>> mvo > {}", mvo);
-		MemberVO loginMvo = msv.login(mvo);
-		if (loginMvo != null) {
-			ses.setAttribute("ses", loginMvo);
-			ses.setMaxInactiveInterval(10 * 60);
-			return "redirect:/";
-		} else {
-			reAttr.addFlashAttribute("isLogin", 1);
-			return "redirect:/member/login";
-		}
+	public String login(HttpServletRequest req, RedirectAttributes reAttr) {
+		reAttr.addFlashAttribute("email", req.getAttribute("email"));
+		reAttr.addFlashAttribute("errMsg", req.getAttribute("errMsg"));
+		return "redirect:/member/login";
+//		log.debug(">>> mvo > {}", mvo);
+//		MemberVO loginMvo = msv.login(mvo);
+//		if (loginMvo != null) {
+//			ses.setAttribute("ses", loginMvo);
+//			ses.setMaxInactiveInterval(10 * 60);
+//			return "redirect:/";
+//		} else {
+//			reAttr.addFlashAttribute("isLogin", 1);
+//			return "redirect:/member/login";
+//		}
 	}
 	
 
@@ -155,7 +158,7 @@ public class MemberController {
 			for (int i = 0; i < 12; i++) {
 				pwd += (char) ((Math.random() * 26) + 97);
 			}
-			mvo.setPwd(pwd);
+			mvo.setPwd(bcpEncoder.encode(pwd));
 			int isUp = msv.modifyPwd(mvo);
 			log.debug(">>> Member modifyPwd > {}", isUp > 0 ? "Success" : "Fail");
 			reAttr.addFlashAttribute("isUp", isUp);
@@ -166,12 +169,14 @@ public class MemberController {
 				messageHelper.setFrom("animalplanetprj@gmail.com"); // 보내는사람 이메일 여기선 google 메일서버 사용하는 아이디를 작성하면됨
 				messageHelper.setTo(mvo.getEmail()); // 받는사람 이메일
 				messageHelper.setSubject(" 애니멀플래닛 임시 비밀번호 발급 안내"); // 메일제목
-				messageHelper.setText("회원님의 임시비밀번호는 " + mvo.getPwd() + "입니다"); // 메일 내용
+				messageHelper.setText("회원님의 임시비밀번호는 " + pwd + "입니다"); // 메일 내용
 				mailSender.send(mimeMessage);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
+		} else {
+			return "redirect:/member/findPwd";
 		}
 		return "redirect:/";
 	}

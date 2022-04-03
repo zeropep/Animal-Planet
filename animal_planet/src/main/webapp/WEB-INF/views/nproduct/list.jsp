@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <jsp:include page="../common/header.jsp" />
 <jsp:include page="../common/nav.jsp" />
 
@@ -77,9 +78,14 @@
 	       <div class="container">
 	          <div class="row">
 			    <div class="col-sm-12 col-md-6">
-<c:if test="${ses.grade eq 100  }">
-					<a href="/nproduct/register" class="btn btn-primary" id="mapView">새 아이템 넣기</a>
-</c:if>
+			      <sec:authorize access="isAuthenticated()">
+				  	<sec:authentication property="principal.mvo.email" var="authEmail"/>
+		            <sec:authentication property="principal.mvo.nickName" var="authNick"/>
+		            <sec:authentication property="principal.mvo.authList" var="auths"/>
+		            <c:if test="${auths.stream().anyMatch(authVO -> authVO.auth.equals('ROLE_ADMIN')).get() }">
+					  <a href="/nproduct/register" class="btn btn-primary" id="mapView">새 아이템 넣기</a>
+		            </c:if>
+		          </sec:authorize>
 			    </div>
 			    <div class="col-12 mb-20">
 				<p class="float-left small">${pgn.totalCount }개의 상품</p>

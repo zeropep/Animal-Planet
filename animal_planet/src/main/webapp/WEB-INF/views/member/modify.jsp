@@ -42,9 +42,10 @@
             <blockquote class="bordered">
               <p class="col-6 float-left">이메일 : <input type="text" id="email" name="email" value="${ses.email }" class="form-control" readonly></p>
               <p class="col-6 float-left">이름 : <input type="text" id="name" name="name" value="${mvo.name }" class="form-control" ></p>
-              <p class="col-6 float-left">닉네임 : <input type="text" id="nickName" name="nickName" value="${mvo.nickName}" class="form-control" ></p>
+              <p class="col-6 float-left">닉네임 : <input type="text" id="nickName" name="nickName" value="${mvo.nickName}" class="form-control" readonly></p>
               <p class="col-6 float-left">연락처 : <input type="text" id="phoneNumber" name="phoneNumber" value="${mvo.phoneNumber }" class="form-control" ></p>
-              <p class="col-12 float-left">주소 : <input type="text" id="address" name="address" value="${mvo.address }" class="form-control " > - <input type="text" id="addressDetail" name="addressDetail" value="${mvo.addressDetail }" class="form-control" ></p>
+              <p class="col-12 float-left">주소 : <input type="text" id="address" name="address" value="${mvo.address }" class="form-control " >
+              							상세주소 : <input type="text" id="addressDetail" name="addressDetail" value="${mvo.addressDetail }" class="form-control" ></p>
             </blockquote>
           <!-- /column -->
         </div>
