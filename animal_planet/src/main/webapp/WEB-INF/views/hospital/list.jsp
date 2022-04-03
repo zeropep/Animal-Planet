@@ -165,5 +165,5 @@
 	</c:forEach>
 </script>
 
-<script src="/resources/js/hospital.list.js"></script>
+<script src="/resources/js/hospital/hospital.list.js"></script>
 <jsp:include page="../common/footer.jsp"/>

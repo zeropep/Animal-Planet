@@ -168,8 +168,8 @@
 	const bplcnm = '<c:out value="${hvo.bplcnm}"/>';
 </script>
 
-<script src="/resources/js/hospital.detail.js"></script>
-<script src="/resources/js/hospital.comment.js"></script>
+<script src="/resources/js/hospital/hospital.detail.js"></script>
+<script src="/resources/js/hospital/hospital.comment.js"></script>
 <script>
 	getCommentList(hnoVal);
 </script>

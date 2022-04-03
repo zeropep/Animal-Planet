@@ -37,6 +37,6 @@
 	</c:forEach>
 </script>
 
-<script src="/resources/js/hospital.nearme.js"></script>
+<script src="/resources/js/hospital/hospital.nearme.js"></script>
 
 <jsp:include page="../common/footer.jsp"/>

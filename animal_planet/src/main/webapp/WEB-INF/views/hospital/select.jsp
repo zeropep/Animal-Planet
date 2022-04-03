@@ -92,6 +92,6 @@
   <!-- /.container -->
 </div>
 
-<script src="/resources/js/hospital.select.js"></script>
+<script src="/resources/js/hospital/hospital.select.js"></script>
 
 <jsp:include page="../common/footer.jsp"/>
